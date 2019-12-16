@@ -1,0 +1,10 @@
+version: '2.1'
+services:
+  nicom_crawler:
+    build: .
+    volumes:
+      - .:/app
+    command: [
+      'crawl',
+      'nicom',
+    ]
