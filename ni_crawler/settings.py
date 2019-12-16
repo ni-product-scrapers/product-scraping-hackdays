@@ -63,7 +63,9 @@ NEWSPIDER_MODULE = 'ni_crawler.spiders'
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'ni_crawler.pipelines.PricePipeline': 300,
-    'ni_crawler.pipelines.ProductUrlPipeline': 300,
+    'ni_crawler.pipelines.ProductUrlPipeline': 400,
+    'ni_crawler.pipelines.ImageUrlPipeline': 500,
+    'ni_crawler.pipelines.NamePipeline': 600
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
