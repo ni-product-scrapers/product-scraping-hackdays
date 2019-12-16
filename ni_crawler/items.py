@@ -8,5 +8,12 @@
 import scrapy
 
 
-class CrawlerItem(scrapy.Item):
-    shop_name = scrapy.Field()
+class ProductItem(scrapy.Item):
+    shop = scrapy.Field()
+    name = scrapy.Field()
+    source_id = scrapy.Field()
+    price = scrapy.Field()
+    currency = scrapy.Field()
+    country = scrapy.Field()
+    product_url = scrapy.Field()
+    image_url = scrapy.Field()
