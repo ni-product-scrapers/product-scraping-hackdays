@@ -8,3 +8,9 @@ services:
       'crawl',
       'nicom',
     ]
+  thomann:
+    extends: nicom_crawler
+    command: [
+      'crawl',
+      'thomann',
+    ]

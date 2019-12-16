@@ -3,7 +3,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
-from ni_crawler.items import CrawlerItem
+from ni_crawler.items import ProductItem
 
 import json
 import os
