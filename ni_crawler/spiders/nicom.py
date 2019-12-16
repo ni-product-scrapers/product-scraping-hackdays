@@ -1,17 +1,6 @@
 # -*- coding: utf-8 -*-
-import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
-
-from ni_crawler.items import ProductItem
-
-import json
-import os
-import re
-
-import pdb
-
-
+from scrapy.spiders import CrawlSpider
+from .. items import ProductItem
 
 
 class NicomSpider(CrawlSpider):
@@ -21,4 +10,3 @@ class NicomSpider(CrawlSpider):
 
     def parse(self, response):
         print(response)
-

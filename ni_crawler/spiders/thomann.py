@@ -1,16 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
-
-from ni_crawler.items import ProductItem
-
-import json
-import os
-import re
-
-import pdb
-
+from .. items import ProductItem
+from scrapy.spiders import CrawlSpider
 
 PRODUCT_PAGES = {
     'https://www.thomann.de/intl/native_instruments_maschine_mikro_mk3.htm': {
@@ -23,6 +14,7 @@ PRODUCT_PAGES = {
 class ThomannSpider(CrawlSpider):
     name = 'thomann'
     allowed_domains = ['thomann.de']
+
     def start_requests(self):
         for url in PRODUCT_PAGES.keys():
             yield scrapy.Request(url, self.parse)
@@ -47,4 +39,3 @@ class ThomannSpider(CrawlSpider):
         item['image_url'] = response.css('.media-gallery img')[0].xpath('@src').extract()[0]
 
         yield item
-
