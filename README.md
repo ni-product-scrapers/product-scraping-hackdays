@@ -1,14 +1,8 @@
-# blogspider
+# Product Scrapers
 mightygoose spiders
 
 
 ## build
-
-```sh
-cp .env.example .env
-```
-
-edit .env
 
 ```sh
 docker-compose build
