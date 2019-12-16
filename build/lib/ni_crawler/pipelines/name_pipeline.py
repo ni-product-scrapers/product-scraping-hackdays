@@ -5,6 +5,7 @@ from scrapy.exceptions import DropItem
 
 class NamePipeline(object):
 
+    @staticmethod
     def process_item(self, item, spider):
         if item.get('name'):
             return item

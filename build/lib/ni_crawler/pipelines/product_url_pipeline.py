@@ -4,15 +4,16 @@ from scrapy.exceptions import DropItem
 import validators
 
 
-class ImageUrlPipeline(object):
+class ProductUrlPipeline(object):
 
+    @staticmethod
     def process_item(self, item, spider):
-        if item.get('image_url'):
-            if validators.url(item.get('image_url')):
+        if item.get('product_url'):
+            if validators.url(item.get('product_url')):
                 return item
             else:
                 raise DropItem("Not a valid url %s" % item)
         else:
-            raise DropItem("Missing image url in %s" % item)
+            raise DropItem("Missing url in %s" % item)
 
 

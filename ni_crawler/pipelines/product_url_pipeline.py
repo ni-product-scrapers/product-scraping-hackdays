@@ -6,7 +6,6 @@ import validators
 
 class ProductUrlPipeline(object):
 
-    @staticmethod
     def process_item(self, item, spider):
         if item.get('product_url'):
             if validators.url(item.get('product_url')):

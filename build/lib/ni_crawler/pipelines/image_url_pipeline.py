@@ -6,6 +6,7 @@ import validators
 
 class ImageUrlPipeline(object):
 
+    @staticmethod
     def process_item(self, item, spider):
         if item.get('image_url'):
             if validators.url(item.get('image_url')):
