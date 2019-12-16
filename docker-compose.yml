@@ -14,3 +14,15 @@ services:
       'crawl',
       'thomann',
     ]
+  justmusic:
+    extends: nicom_crawler
+    command: [
+      'crawl',
+      'justmusic',
+    ]
+  gear4music:
+    extends: nicom_crawler
+    command: [
+      'crawl',
+      'gear4music',
+    ]
