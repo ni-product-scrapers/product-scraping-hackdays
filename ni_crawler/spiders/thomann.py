@@ -7,6 +7,7 @@ PRODUCT_PAGES = {
     'https://www.thomann.de/intl/native_instruments_maschine_mikro_mk3.htm': {
         'name': 'Maschine Mikro MK3',
         'id': 'MaschineMikroMK3',
+        'sku': 'MASCHINEMikroMk3',
     },
 }
 
@@ -28,6 +29,7 @@ class ThomannSpider(CrawlSpider):
         item['country'] = 'DE'
         item['product_url'] = url
         item['name'] = PRODUCT_PAGES[url]['name']
+        item['sku'] = PRODUCT_PAGES[url]['sku']
 
         price_block = response.css('.price-and-availability')
 
