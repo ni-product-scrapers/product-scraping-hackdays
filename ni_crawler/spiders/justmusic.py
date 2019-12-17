@@ -30,7 +30,6 @@ class JustMusicSpider(CrawlSpider):
         item['product_url'] = url
         item['name'] = PRODUCT_PAGES[url]['name']
         item['sku'] = PRODUCT_PAGES[url]['sku']
-
         price_block = response.css('.custom_buybox')
         item['price'] = price_block.css('[itemprop="price"]')[0].xpath('@content')[0].extract()
         item['currency'] = price_block.css('[itemprop="priceCurrency"]')[0].xpath('@content')[0].extract()

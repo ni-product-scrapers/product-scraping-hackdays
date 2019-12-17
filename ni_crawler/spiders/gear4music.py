@@ -29,11 +29,10 @@ class Gear4MusicSpider(CrawlSpider):
         item['country'] = 'DE'
         item['product_url'] = url
         item['name'] = PRODUCT_PAGES[url]['name']
-
+        item['sku'] = PRODUCT_PAGES[url]['sku']
         price_block = response.css('.info-row-price')
         item['price'] = price_block.css('[itemprop="price"]')[0].xpath('@content')[0].extract()
         item['currency'] = price_block.css('[itemprop="priceCurrency"]')[0].xpath('@content')[0].extract()
-
         item['image_url'] = response.css('[itemprop="image"]')[0].xpath('@src')[0].extract()
 
         yield item

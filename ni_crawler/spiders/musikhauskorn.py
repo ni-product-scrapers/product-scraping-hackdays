@@ -4,7 +4,7 @@ from .. items import ProductItem
 from scrapy.spiders import CrawlSpider
 
 PRODUCT_PAGES = {
-    'https://www.thomann.de/intl/native_instruments_maschine_mikro_mk3.htm': {
+    'https://www.musikhaus-korn.de/de/native-instruments-maschine-mikro-mk3/pd/170627': {
         'name': 'Maschine Mikro MK3',
         'id': 'MaschineMikroMK3',
         'sku': 'MASCHINEMikroMk3',
@@ -12,9 +12,9 @@ PRODUCT_PAGES = {
 }
 
 
-class ThomannSpider(CrawlSpider):
-    name = 'thomann'
-    allowed_domains = ['thomann.de']
+class MusicHausKornSpider(CrawlSpider):
+    name = 'musichauskorn'
+    allowed_domains = ['musichaus-korn.de']
 
     def start_requests(self):
         for url in PRODUCT_PAGES.keys():
@@ -22,18 +22,14 @@ class ThomannSpider(CrawlSpider):
 
     def parse(self, response):
         url = response.url
-
         item = ProductItem()
-
-        item['shop'] = 'thomann'
+        item['shop'] = 'musichauskorn'
         item['country'] = 'DE'
         item['product_url'] = url
         item['name'] = PRODUCT_PAGES[url]['name']
+        item['price'] = response.xpath('//*[@id="product-price"]/p[1]/span[1]/font/font')[0]
+        item['currency'] = response.xpath('//*[@id="product-price"]/p[1]/span[2]/font/font')[0]
+        item['image_url'] = response.xpath('//*[@id="product-main-image"]/div/img/@src').extract_first()
         item['sku'] = PRODUCT_PAGES[url]['sku']
-        price_block = response.css('.price-and-availability')
-        item['price'] = price_block.css('[itemprop="price"]')[0].xpath('@content')[0].extract()
-        item['currency'] = price_block.css('[itemprop="priceCurrency"]')[0].xpath('@content')[0].extract()
-
-        item['image_url'] = response.css('.media-gallery img')[0].xpath('@src').extract()[0]
 
         yield item
