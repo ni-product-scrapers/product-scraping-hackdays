@@ -13,9 +13,9 @@ PRODUCT_PAGES = {
 }
 
 
-class MusicHausKornSpider(CrawlSpider):
-    name = 'musichauskorn'
-    allowed_domains = ['musichaus-korn.de']
+class MusikHausKornSpider(CrawlSpider):
+    name = 'musikhauskorn'
+    allowed_domains = ['musikhaus-korn.de']
 
     def start_requests(self):
         for url in PRODUCT_PAGES.keys():
@@ -24,7 +24,7 @@ class MusicHausKornSpider(CrawlSpider):
     def parse(self, response):
         url = response.url
         item = ProductItem()
-        item['shop'] = 'musichauskorn'
+        item['shop'] = 'musikhauskorn'
         item['country'] = 'DE'
         item['product_url'] = url
         item['name'] = PRODUCT_PAGES[url]['name']
