@@ -39,7 +39,7 @@ class Gear4MusicSpider(CrawlSpider):
                                  'div.react-product-listing-widget__message--listing-count > p > '
                                  'span::text')[1].extract()) / 45)
 
-        for page_number in range(2, self.total_page_number):
+        for page_number in range(2, int(self.total_page_number)):
             link = '{}?page={}'.format(self.START_URL, page_number)
             yield scrapy.Request(link, self.parse)
 
