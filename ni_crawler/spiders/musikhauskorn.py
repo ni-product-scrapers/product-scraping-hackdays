@@ -27,8 +27,8 @@ class MusicHausKornSpider(CrawlSpider):
         item['country'] = 'DE'
         item['product_url'] = url
         item['name'] = PRODUCT_PAGES[url]['name']
-        item['price'] = response.xpath('//*[@id="product-price"]/p[1]/span[1]/font/font')[0]
-        item['currency'] = response.xpath('//*[@id="product-price"]/p[1]/span[2]/font/font')[0]
+        item['price'] = response.xpath('//*[@id="product-price"]/p[1]/span[1]/font/font/text()').extract_first()
+        item['currency'] = response.xpath('//*[@id="product-price"]/p[1]/span[2]/font/font/text()').extract_first()
         item['image_url'] = response.xpath('//*[@id="product-main-image"]/div/img/@src').extract_first()
         item['sku'] = PRODUCT_PAGES[url]['sku']
 
