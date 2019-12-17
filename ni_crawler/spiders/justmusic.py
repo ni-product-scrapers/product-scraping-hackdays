@@ -4,18 +4,26 @@ from .. items import ProductItem
 from scrapy.spiders import CrawlSpider
 
 
-PRODUCT_PAGES = ['https://www.justmusic.de/Recording/Controller/Sonstige-Controller/Native-Instruments-Maschine-Mikro-MK3']
-
+DOMAIN = 'justmusic.de'
+START_URL = 'https://www.justmusic.de/Article?Items=45&s=native%20instruments'
 
 class JustMusicSpider(CrawlSpider):
     name = 'justmusic'
-    allowed_domains = ['justmusic.de']
-
-    def start_requests(self):
-        for url in PRODUCT_PAGES:
-            yield scrapy.Request(url, self.parse)
+    allowed_domains = [DOMAIN]
+    start_urls = tuple([START_URL])
 
     def parse(self, response):
+	products = response.css('[data-id="Articles"] .title a::attr("href")').extract()
+	for product_link in products:
+		product_link_absolute = 'https://www.{0}{1}'.format(DOMAIN, product_link)
+		yield scrapy.Request(product_link_absolute, self.parse_product)
+
+	last_page = response.css('[data-id="Page"][data-page]:not(.active)')[-1].css('::attr("data-page")')[0].extract()
+	for page_number in range(2, int(last_page)):
+	    link = '{}&Page={}'.format(START_URL, page_number)
+	    yield scrapy.Request(link, self.parse)
+
+    def parse_product(self, response):
         url = response.url
 
         item = ProductItem()
