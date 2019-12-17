@@ -3,13 +3,8 @@ import scrapy
 from .. items import ProductItem
 from scrapy.spiders import CrawlSpider
 
-PRODUCT_PAGES = {
-    'https://www.thomann.de/intl/native_instruments_maschine_mikro_mk3.htm': {
-        'name': 'Maschine Mikro MK3',
-        'id': 'MaschineMikroMK3',
-        'sku': 'MASCHINEMikroMk3',
-    },
-}
+
+PRODUCT_PAGES = ['https://www.thomann.de/intl/native_instruments_maschine_mikro_mk3.htm']
 
 
 class ThomannSpider(CrawlSpider):
@@ -17,7 +12,7 @@ class ThomannSpider(CrawlSpider):
     allowed_domains = ['thomann.de']
 
     def start_requests(self):
-        for url in PRODUCT_PAGES.keys():
+        for url in PRODUCT_PAGES:
             yield scrapy.Request(url, self.parse)
 
     def parse(self, response):
@@ -28,8 +23,9 @@ class ThomannSpider(CrawlSpider):
         item['shop'] = 'thomann'
         item['country'] = 'DE'
         item['product_url'] = url
-        item['name'] = PRODUCT_PAGES[url]['name']
-        item['sku'] = PRODUCT_PAGES[url]['sku']
+
+        item['name'] = response.css('[itemprop="name"]::text')[0].extract()
+
         price_block = response.css('.price-and-availability')
         item['price'] = price_block.css('[itemprop="price"]')[0].xpath('@content')[0].extract()
         item['currency'] = price_block.css('[itemprop="priceCurrency"]')[0].xpath('@content')[0].extract()

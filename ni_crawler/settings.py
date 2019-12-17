@@ -67,6 +67,7 @@ ITEM_PIPELINES = {
     'ni_crawler.pipelines.ImageUrlPipeline': 500,
     'ni_crawler.pipelines.NamePipeline': 600,
     'ni_crawler.pipelines.MongoDBPipeline': 0,
+    'ni_crawler.pipelines.RestoreSkuPipeline': 700
 }
 
 

@@ -30,5 +30,5 @@ services:
     extends: nicom_crawler
     command: [
       'crawl',
-      'musichauskorn',
+      'musikhauskorn',
     ]

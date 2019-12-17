@@ -3,13 +3,8 @@ import scrapy
 from .. items import ProductItem
 from scrapy.spiders import CrawlSpider
 
-PRODUCT_PAGES = {
-    'https://www.justmusic.de/Recording/Controller/Sonstige-Controller/Native-Instruments-Maschine-Mikro-MK3': {
-        'name': 'Maschine Mikro MK3',
-        'id': 'MaschineMikroMK3',
-        'sku': 'MASCHINEMikroMk3',
-    },
-}
+
+PRODUCT_PAGES = ['https://www.justmusic.de/Recording/Controller/Sonstige-Controller/Native-Instruments-Maschine-Mikro-MK3']
 
 
 class JustMusicSpider(CrawlSpider):
@@ -17,7 +12,7 @@ class JustMusicSpider(CrawlSpider):
     allowed_domains = ['justmusic.de']
 
     def start_requests(self):
-        for url in PRODUCT_PAGES.keys():
+        for url in PRODUCT_PAGES:
             yield scrapy.Request(url, self.parse)
 
     def parse(self, response):
@@ -28,8 +23,7 @@ class JustMusicSpider(CrawlSpider):
         item['shop'] = 'justmusic'
         item['country'] = 'DE'
         item['product_url'] = url
-        item['name'] = PRODUCT_PAGES[url]['name']
-        item['sku'] = PRODUCT_PAGES[url]['sku']
+        item['name'] = response.css('#article_navigation [itemprop="name"]::text')[0].extract()
         price_block = response.css('.custom_buybox')
         item['price'] = price_block.css('[itemprop="price"]')[0].xpath('@content')[0].extract()
         item['currency'] = price_block.css('[itemprop="priceCurrency"]')[0].xpath('@content')[0].extract()
