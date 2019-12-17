@@ -25,6 +25,6 @@ class MusikHausKornSpider(CrawlSpider):
         item['name'] = response.css('#product > h1::text')[0].extract()
         item['price'] = response.xpath('//*[@id="product-price"]/p[1]/span[1]/text()')[0].extract().replace(',', '.')
         item['currency'] = response.xpath('//*[@id="product-price"]/p[1]/span[2]/text()')[0].extract()
-        item['image_url'] = response.xpath('//*[@id="product-main-image"]/div/img/@src').extract_first()
+        item['image_url'] = 'https:' + response.xpath('//*[@id="product-main-image"]/div/img/@src').extract_first()
 
         yield item
