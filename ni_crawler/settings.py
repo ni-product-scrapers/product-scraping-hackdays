@@ -65,8 +65,10 @@ ITEM_PIPELINES = {
     'ni_crawler.pipelines.PricePipeline': 300,
     'ni_crawler.pipelines.ProductUrlPipeline': 400,
     'ni_crawler.pipelines.ImageUrlPipeline': 500,
-    'ni_crawler.pipelines.NamePipeline': 600
+    'ni_crawler.pipelines.NamePipeline': 600,
+    'ni_crawler.pipelines.MongoDBPipeline': 0,
 }
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

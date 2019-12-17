@@ -17,6 +17,8 @@ class ProductItem(scrapy.Item):
     country = scrapy.Field()
     product_url = scrapy.Field()
     image_url = scrapy.Field()
+    creates_at = scrapy.Field()
+    updated_at = scrapy.Field()
 
     # will be deprecated
     sku = scrapy.Field()
