@@ -16,7 +16,7 @@ class MusikHausKornSpider(CrawlSpider):
     def parse(self, response):
         products = response.xpath('//*[@id="search-product-list"]/div/div/div/a')
         for product in products:
-            url = self.DOMAIN + product.xpath('@href').extract_first()
+            url = 'https://' + self.DOMAIN + product.xpath('@href').extract_first()
             print(url)
             item = ProductItem()
             item['shop'] = 'musikhauskorn'
