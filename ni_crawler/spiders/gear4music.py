@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-import scrapy
-from .. items import ProductItem
-from scrapy.spiders import CrawlSpider
 import math
+
+import scrapy
+from scrapy.spiders import CrawlSpider
+import pdb
+from ..items import ProductItem
 
 
 class Gear4MusicSpider(CrawlSpider):
@@ -11,6 +13,7 @@ class Gear4MusicSpider(CrawlSpider):
     name = 'gear4music'
     allowed_domains = [DOMAIN]
     start_urls = tuple([START_URL])
+    total_page_number = 0
 
     def parse(self, response):
 
@@ -28,12 +31,16 @@ class Gear4MusicSpider(CrawlSpider):
 
             yield scrapy.Request(url, meta={'item': item}, callback=self.parse_image_url)
 
-        number_of_pages = math.ceil(int(response.css('body > div.single-column-responsive-layout.style-alt > '
-                                                     'div.container-fluid.plp-page.content.hide-on-search > div > div '
-                                                     '> div.widget--product-listing > div > div > '
-                                                     'div.react-product-listing-widget__message--listing-count > p > '
-                                                     'span::text')[1].extract()) / 45)
-        for page_number in range(2, number_of_pages):
+        pdb.set_trace()
+        if self.total_page_number == 0:
+            self.total_page_number = math.ceil(
+                int(response.css('body > div.single-column-responsive-layout.style-alt > '
+                                 'div.container-fluid.plp-page.content.hide-on-search > div > div '
+                                 '> div.widget--product-listing > div > div > '
+                                 'div.react-product-listing-widget__message--listing-count > p > '
+                                 'span::text')[1].extract()) / 45)
+
+        for page_number in range(2, self.total_page_number):
             link = '{}?page={}'.format(self.START_URL, page_number)
             yield scrapy.Request(link, self.parse)
 
