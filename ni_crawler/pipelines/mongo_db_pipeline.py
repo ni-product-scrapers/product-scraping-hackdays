@@ -19,7 +19,8 @@ class MongoDBPipeline(object):
                 raise DropItem("Missing {0}!".format(data))
         if valid:
             collection = self.client.get_database('scraped-products').get_collection('items')
-            item_exists = collection.find_one_and_update({"sku": item['sku'], "shop": item['shop']}, {"$set": dict(item)})
+            item_exists = collection.find_one_and_update({"sku": item['sku'], "shop": item['shop']},
+                                                         {"$set": dict(item)}, upsert=True)
             print(item_exists)
-            #collection.insert(dict(item))
+            # collection.insert(dict(item))
         return item

@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from scrapy.exceptions import DropItem
-import urllib, urllib2
 import json
 
+import urllib2
+from scrapy.exceptions import DropItem
 
-import pdb
-
-
-RESTORE_ENDPOINT_URL='http://native-instruments.com/graphql'
-
+RESTORE_ENDPOINT_URL = 'http://native-instruments.com/graphql'
 
 
 class RestoreSkuPipeline(object):
@@ -19,7 +15,7 @@ class RestoreSkuPipeline(object):
             'operationName': 'GetProductsForFinder',
             'variables': {
                 'search': item['name'],
-                'hitsPerPage':1
+                'hitsPerPage': 1
             },
             'query': '''
                  query GetProductsForFinder(
@@ -50,7 +46,7 @@ class RestoreSkuPipeline(object):
 
         data = json.dumps(values)
         req = urllib2.Request(RESTORE_ENDPOINT_URL, data, headers)
-        response = urllib2.urlopen(req, timeout = 5)
+        response = urllib2.urlopen(req, timeout=5)
         response_body = response.read()
         response = json.loads(response_body)
 
@@ -63,4 +59,3 @@ class RestoreSkuPipeline(object):
             return item
         except:
             raise DropItem('Could not find product in NI database: %s' % item)
-
