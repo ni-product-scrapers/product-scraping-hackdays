@@ -31,7 +31,6 @@ class Gear4MusicSpider(CrawlSpider):
 
             yield scrapy.Request(url, meta={'item': item}, callback=self.parse_image_url)
 
-        pdb.set_trace()
         if self.total_page_number == 0:
             self.total_page_number = math.ceil(
                 int(response.css('body > div.single-column-responsive-layout.style-alt > '
