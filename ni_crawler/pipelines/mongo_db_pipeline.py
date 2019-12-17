@@ -1,5 +1,6 @@
 import pymongo
 from scrapy.exceptions import DropItem
+from datetime import datetime
 
 
 class MongoDBPipeline(object):
@@ -16,8 +17,14 @@ class MongoDBPipeline(object):
     def process_item(self, item, spider):
         if item:
             collection = self.client.get_database(self.database).get_collection(self.collection)
-            collection.find_one_and_update({"sku": item['sku'], "shop": item['shop']},
-                                           {"$set": dict(item)}, upsert=True)
+            query = {"sku": item['sku'], "shop": item['shop']}
+            timestamp = datetime.now()
+            insert_data = dict(item)
+            insert_data['updated_at'] = timestamp
+            if collection.count_documents(query) is 0:
+                insert_data['created_at'] = timestamp
+            collection.find_one_and_update(query,
+                                           {"$set": insert_data}, upsert=True)
         else:
             raise DropItem("Missing {0}!".format(item))
         return item
