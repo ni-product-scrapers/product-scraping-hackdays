@@ -53,9 +53,6 @@ class RestoreSkuPipeline(object):
         try:
             restored_item = response['data']['user']['getProducts']['result']['items'][0]
             item['sku'] = restored_item['sku']
-
-            # @deprecated. original name needs to be taken
-            item['name'] = restored_item['title']
             return item
         except:
             raise DropItem('Could not find product in NI database: %s' % item)
